@@ -16,10 +16,9 @@ Ticker.prototype.pause = function(){
     clearInterval(this.interval);
 }
 
-
-hue = 0;
-lightness = 0;
-saturation = 0;
+hue = 180;
+lightness = 50;
+saturation = 50;
 
 var bump = function(e){
     var x = e.clientX / window.screen.width;
@@ -43,6 +42,11 @@ setInterval(function(){
 }, 1);
 
 window.onmousemove = bump;
+
+document.getElementById('spectrum').addEventListener('DOMContentLoaded', function(){
+    debugger;
+    document.getElementById('spectrum').classList
+}, false);
 
 window.ticker = new Ticker(tick, 1);
 
