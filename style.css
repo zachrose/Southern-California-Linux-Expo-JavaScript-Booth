@@ -27,7 +27,7 @@ h1 {
     padding-bottom: 100%;
 }
 
-#spectrum, #tshirt-artwork, #blank-tshirt-overlay, #tshirt-color {
+#tshirt-artwork, #blank-tshirt-overlay, #tshirt-color {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -39,14 +39,14 @@ h1 {
 
 #blank-tshirt-overlay {
     z-index: 1;
-    background-image: url(blank-tshirt.png);
+    background-image: url(images/blank-tshirt.png);
     background-size: contain;
     opacity: 1;
 }
 
 #tshirt-artwork {
     z-index: 2;
-    background-image: url(javascript2a.png);
+    background-image: url(images/logo-2.png);
     background-size: 40%;
     background-position: 41% 30%;
     background-repeat: no-repeat;
@@ -72,7 +72,7 @@ menu#color-picker {
 }
 
 #color-picker div#hue {
-    background-image: url(hue.png);
+    background-image: url(images/hue.png);
     background-size: 100% 100%;
 }
 
