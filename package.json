@@ -21,6 +21,8 @@
   "homepage": "https://github.com/zachrose/Southern-California-Linux-Expo-JavaScript-Booth-2017#readme",
   "dependencies": {
     "color": "^0.11.4",
+    "tinycolor": "0.0.1",
+    "tinygradient": "^0.3.1",
     "webpack": "^1.13.3"
   }
 }
