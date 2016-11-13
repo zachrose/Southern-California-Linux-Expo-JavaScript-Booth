@@ -15,7 +15,6 @@ h1 {
 
 #tshirt {
     position: relative;
-    border: 2px solid fuchsia;
     width: 90vw;
     height: 90vw;
 }
@@ -44,6 +43,10 @@ h1 {
     background-size: 40%;
     background-position: 41% 30%;
     background-repeat: no-repeat;
+}
+
+#tshirt-artwork.light {
+    filter: invert(100%);
 }
 
 #spectrum {

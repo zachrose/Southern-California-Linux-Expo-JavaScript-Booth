@@ -1,0 +1,25 @@
+{
+  "name": "Southern-California-Linux-Expo-JavaScript-Booth-2017",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script-old.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack source.js script.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zachrose/Southern-California-Linux-Expo-JavaScript-Booth-2017.git"
+  },
+  "keywords": [],
+  "author": "Zach Rose <zach@zachrose.biz> (http://www.zachrose.biz)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zachrose/Southern-California-Linux-Expo-JavaScript-Booth-2017/issues"
+  },
+  "homepage": "https://github.com/zachrose/Southern-California-Linux-Expo-JavaScript-Booth-2017#readme",
+  "dependencies": {
+    "color": "^0.11.4",
+    "webpack": "^1.13.3"
+  }
+}
