@@ -4,7 +4,7 @@ var getColorInputs = function(doc){
     return ['hue', 'lightness', 'saturation'].map(function(dimension){
         return [ 
             dimension,
-            document.getElementById(dimension).value
+            document.querySelector(`#${dimension} input`).value
         ]
     }).reduce(function(memo, pair){
         memo[pair[0]] = pair[1];
