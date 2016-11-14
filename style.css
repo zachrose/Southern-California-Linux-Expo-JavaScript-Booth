@@ -12,6 +12,28 @@ html, body {
 
 body {
     padding: 1em;
+    min-height: 100%;
+}
+
+body #voted {
+    display: none;
+}
+
+body.voted #voting {
+    display: none;
+}
+
+body.voted #voted {
+    display: block;
+}
+
+body.subscribed #subscribe {
+    display: none;
+}
+
+#voted h1 {
+    margin-top: 50%;
+    position: relative;
 }
 
 #container {
@@ -110,4 +132,12 @@ menu#color-picker {
 
 #hex {
     font-family: "Menlo", monospace;
+}
+
+#voted {
+    text-align: center;
+}
+
+#signup {
+    margin-top: 2em;
 }

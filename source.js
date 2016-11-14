@@ -1,5 +1,5 @@
 var Color = require('color');
-// var Cookies = require('js-cookie');
+var Cookies = require('js-cookie');
 var tinygradient = require('tinygradient');
 
 var getColorInputs = function(doc){
@@ -70,6 +70,13 @@ var loop = function(){
 }
 
 var intro = function(){
+    if(Cookies.get('subscribed')){
+        document.body.classList.add('subscribed');
+    }
+    if(Cookies.get('voted')){
+        document.body.classList.add('voted');
+        return setInterval(function(){}, 100);
+    }
     var i = 0;
     var f = function(x){ return Math.sin(x/(Math.PI*50))*180 };
     return setInterval(function(){
@@ -80,16 +87,29 @@ var intro = function(){
     }, 32);
 }
 
-var introInterval = intro();
-
-setInterval(loop, 32);
-setTimeout(function(){ clearInterval(introInterval) }, 3000);
-
 setImmediate(function(){
+    var introInterval = intro();
+    setInterval(loop, 32);
+    setTimeout(function(){ clearInterval(introInterval) }, 3000);
+
     document.getElementById('vote').addEventListener('click', function(){
+        var hex = document.getElementById('hex').innerText;
         analytics.track("T-Shirt Color Vote", {
-            hexColor: document.getElementById('hex').innerText
+            hexColor: hex
         });
         document.body.classList.add('voted');
+        Cookies.set('voted', hex);
+    });
+
+    document.querySelector('#subscribe button').addEventListener('click', function(){
+        var email = document.querySelector('#subscribe input').value;
+        var looksOk = email.match(/@/);
+        if(!looksOk){
+            alert("Please check this email address and try again");
+            return;
+        }
+        analytics.track("Subscribed", { email: email });
+        document.body.classList.add('subscribed');
+        Cookies.set('subscribed', true);
     });
 });
