@@ -5,6 +5,7 @@ html, body {
 
 * {
     font-family: "Helvetica";
+    font-family: Georgia;
     font-size: 24px;
     line-height: 1.5em;
 }
@@ -25,6 +26,7 @@ h1 {
     font-weight: normal;
     font-size: 1.5em;
     text-align: center;
+    // text-transform: uppercase;
 }
 
 #tshirt {
@@ -92,11 +94,20 @@ menu#color-picker {
 #vote {
     width: 100%;
     height: 3em;
-    // font-size: 1.5em;
-    text-align: left;
-    text-indent: 1.75em;
+    text-align: center;
 }
 
 #vote.light {
     color: white;
+}
+
+#vote .for {
+    display: none;
+}
+#vote.for .for {
+    display: inline;
+}
+
+#hex {
+    font-family: "Menlo", monospace;
 }
