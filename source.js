@@ -1,6 +1,6 @@
 var Color = require('color');
-var Cookies = require('js-cookie');
 var tinygradient = require('tinygradient');
+var el = (id) => document.getElementById(id);
 
 var getColorInputs = function(doc){
     return ['hue', 'lightness', 'saturation'].map(function(dimension){
@@ -14,22 +14,22 @@ var getColorInputs = function(doc){
     }, {});
 };
 
-var setShirtColor = function(doc){
+var updateShirtColor = function(colorElement, artworkElement){
     return function(shirtColorString, artLightOrDark){
-        doc.getElementById('tshirt-color')
+        colorElement
             .style
             .backgroundColor = shirtColorString;
-        doc.getElementById('tshirt-artwork').classList.remove('light');
-        doc.getElementById('tshirt-artwork').classList.remove('dark');
-        doc.getElementById('tshirt-artwork').classList.add(artLightOrDark);
+        artworkElement.classList.remove('light');
+        artworkElement.classList.remove('dark');
+        artworkElement.classList.add(artLightOrDark);
     }
-}
+};
 
-var setColorPickerColor = function(doc){
-    var setPickerBackground = function(dimension){
+var updateColorPicker = function(saturationElement, lightnessElement){
+    var setPickerBackground = function(element, dimension){
         return function(color){
             var _color = Color(color);
-            doc.getElementById(dimension).style.background = tinygradient([
+            element.style.background = tinygradient([
                 {pos: 0.0, color: _color[dimension](000).hexString()},
                 {pos: 0.5, color: _color[dimension](050).hexString()},
                 {pos: 1.0, color: _color[dimension](100).hexString()}
@@ -37,46 +37,41 @@ var setColorPickerColor = function(doc){
         }
     };
     return function(color){
-        setPickerBackground('saturation')(color);
-        setPickerBackground('lightness')(color);
+        setPickerBackground(saturationElement, 'saturation')(color);
+        setPickerBackground(lightnessElement, 'lightness')(color);
     }
 }
 
-var setButton = function(doc){
+var updateButton = function(buttonElement, hexElement){
     return function(color, lightOrDark){
-        var element = doc.getElementById('vote');
         var hex = Color(color).hexString();
-        var hexEl = doc.getElementById('hex');
-        hexEl.innerText = hex;
-        element.style.backgroundColor = hex;
-        element.classList.remove('light');
-        element.classList.remove('dark');
-        element.classList.add('for');
-        element.classList.add(lightOrDark);
+        hexElement.innerText = hex;
+        buttonElement.style.backgroundColor = hex;
+        buttonElement.classList.remove('light');
+        buttonElement.classList.remove('dark');
+        buttonElement.classList.add('for');
+        buttonElement.classList.add(lightOrDark);
     }
 }
+
 
 var loop = function(){
     var color = getColorInputs(document);
-    setColorPickerColor(document)(color);
-    setButton(document)(
+    updateColorPicker(el('saturation'), el('lightness'))(color);
+    updateButton(
+        el('vote'),
+        el('hex')
+    )(
         color,
         Color(color).dark() ? 'light' : 'dark'
     )
-    setShirtColor(document)(
+    updateShirtColor(el('tshirt-color'), el('tshirt-artwork'))(
         Color(color).hslString(),
         Color(color).dark() ? 'light' : 'dark'
     )
 }
 
 var intro = function(){
-    if(Cookies.get('subscribed')){
-        document.body.classList.add('subscribed');
-    }
-    if(Cookies.get('voted')){
-        document.body.classList.add('voted');
-        return setInterval(function(){}, 100);
-    }
     var i = 0;
     var f = function(x){ return Math.sin(x/(Math.PI*50))*180 };
     return setInterval(function(){
@@ -92,13 +87,12 @@ setImmediate(function(){
     setInterval(loop, 32);
     setTimeout(function(){ clearInterval(introInterval) }, 3000);
 
-    document.getElementById('vote').addEventListener('click', function(){
-        var hex = document.getElementById('hex').innerText;
+    el('vote').addEventListener('click', function(){
+        var hex = el('hex').innerText;
         analytics.track("T-Shirt Color Vote", {
             hexColor: hex
         });
         document.body.classList.add('voted');
-        Cookies.set('voted', hex);
     });
 
     document.querySelector('#subscribe button').addEventListener('click', function(){
@@ -110,6 +104,5 @@ setImmediate(function(){
         }
         analytics.track("Subscribed", { email: email });
         document.body.classList.add('subscribed');
-        Cookies.set('subscribed', true);
     });
 });
