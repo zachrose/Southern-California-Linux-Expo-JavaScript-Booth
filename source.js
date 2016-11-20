@@ -2,7 +2,13 @@ var Color = require('color');
 var tinygradient = require('tinygradient');
 var el = (id) => document.getElementById(id);
 
-var getColorInputs = function(doc){
+var bindColorInputChanges = function(fn){
+    return ['hue', 'lightness', 'saturation'].map(function(dimension){
+        el(dimension).addEventListener('input', fn);
+    })
+};
+
+var getColorInputs = function(){
     return ['hue', 'lightness', 'saturation'].map(function(dimension){
         return [ 
             dimension,
@@ -55,9 +61,7 @@ var updateButton = function(buttonElement, hexElement){
     }
 }
 
-
-var loop = function(){
-    var color = getColorInputs(document);
+var update = function(color){
     updateColorPicker(el('saturation'), el('lightness'))(color);
     updateButton(
         el('vote'),
@@ -72,13 +76,16 @@ var loop = function(){
     )
 }
 
+bindColorInputChanges(function(){
+    update(getColorInputs())
+});
+
+update(getColorInputs())
+
 var subscribe = function(){};  // no-op
 var vote = function(){
     document.body.classList.add('voted');
 };
 
-setImmediate(function(){
-    setInterval(loop, 32);
-    el('vote').addEventListener('click', vote);
-    document.querySelector('#subscribe button').addEventListener('click', subscribe)
-});
+el('vote').addEventListener('click', vote);
+document.querySelector('#subscribe button').addEventListener('click', subscribe)
