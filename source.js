@@ -71,21 +71,8 @@ var loop = function(){
     )
 }
 
-var intro = function(){
-    var i = 0;
-    var f = function(x){ return Math.sin(x/(Math.PI*50))*180 };
-    return setInterval(function(){
-        i += 16;
-        i = Math.min(i, 989);
-        hue = f(i) + 180;
-        document.querySelector('#hue input').value = hue;
-    }, 32);
-}
-
 setImmediate(function(){
-    var introInterval = intro();
     setInterval(loop, 32);
-    setTimeout(function(){ clearInterval(introInterval) }, 3000);
 
     el('vote').addEventListener('click', function(){
         var hex = el('hex').innerText;
