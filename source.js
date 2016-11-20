@@ -15,10 +15,11 @@ var getColorInputs = function(doc){
 };
 
 var updateShirtColor = function(colorElement, artworkElement){
-    return function(shirtColorString, artLightOrDark){
+    return function(color, artLightOrDark){
+        var hex = Color(color).hexString();
         colorElement
             .style
-            .backgroundColor = shirtColorString;
+            .backgroundColor = hex;
         artworkElement.classList.remove('light');
         artworkElement.classList.remove('dark');
         artworkElement.classList.add(artLightOrDark);
@@ -66,7 +67,7 @@ var loop = function(){
         Color(color).dark() ? 'light' : 'dark'
     )
     updateShirtColor(el('tshirt-color'), el('tshirt-artwork'))(
-        Color(color).hslString(),
+        color,
         Color(color).dark() ? 'light' : 'dark'
     )
 }
