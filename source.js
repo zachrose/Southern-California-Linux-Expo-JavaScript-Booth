@@ -71,25 +71,13 @@ var loop = function(){
     )
 }
 
+var subscribe = function(){};  // no-op
+var vote = function(){
+    document.body.classList.add('voted');
+};
+
 setImmediate(function(){
     setInterval(loop, 32);
-
-    el('vote').addEventListener('click', function(){
-        var hex = el('hex').innerText;
-        analytics.track("T-Shirt Color Vote", {
-            hexColor: hex
-        });
-        document.body.classList.add('voted');
-    });
-
-    document.querySelector('#subscribe button').addEventListener('click', function(){
-        var email = document.querySelector('#subscribe input').value;
-        var looksOk = email.match(/@/);
-        if(!looksOk){
-            alert("Please check this email address and try again");
-            return;
-        }
-        analytics.track("Subscribed", { email: email });
-        document.body.classList.add('subscribed');
-    });
+    el('vote').addEventListener('click', vote);
+    document.querySelector('#subscribe button').addEventListener('click', subscribe)
 });
