@@ -22,8 +22,8 @@ app.get('/', function(req, res){
     res.send('hi!')
 })
 
-app.post('/anonymous_vote', function(req, res){
-    req.assert('color', "Enter a valid hex color.").isHexColor();
+app.post('/anonymous_votes', function(req, res){
+    req.assert('color', "Hex color not valid.").isHexColor();
     req.getValidationResult().then(function(result){
         if(!result.isEmpty()){
             res.status(400).json({errors: result.array()})
@@ -34,5 +34,13 @@ app.post('/anonymous_vote', function(req, res){
                 res.status(201).json({yay: 'hooray'})
             })
         }
+    })
+})
+
+app.get('/anonymous_votes', function(req, res){
+    postgres.select().from('anon_color_vote').then(function(rows){
+        res.status(200).json({
+            anonymous_votes: rows
+        })
     })
 })
