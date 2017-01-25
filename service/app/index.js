@@ -15,6 +15,7 @@ const corsWhitelist = [
 const corsOptions = {
     origin: function(origin, callback) {
         const isOk = corsWhitelist.indexOf(origin) !== -1
+        console.log(origin+' is '+(isOk? 'ok' : 'not ok'))
         callback(isOk ? null : 'Bad Request', isOk)
     }
 }
@@ -30,6 +31,8 @@ app.use(function (req, res, next) {
     res.header("X-powered-by", "JavaScript!") // lol
     next()
 })
+
+app.options('*', cors(corsOptions))
 
 app.get('/', function(req, res){
     res.send('hi!')
