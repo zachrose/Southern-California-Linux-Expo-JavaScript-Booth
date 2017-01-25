@@ -161,3 +161,12 @@ menu#color-picker {
     display: none;
 }
 
+footer {
+    font-size: 12px;
+    margin-top: 4em;    
+    text-align: center;
+}
+
+footer a {
+    font-size: 12px;
+}
