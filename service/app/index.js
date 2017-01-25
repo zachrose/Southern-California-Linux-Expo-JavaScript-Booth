@@ -1,11 +1,23 @@
 const bodyParser = require('body-parser')
 const Color = require('color')
+const cors = require('cors')
 const crypto = require('crypto')
 const express = require('express')
 const knex = require('knex')
 const validator = require('express-validator')
 
 const app = module.exports = express()
+const corsWhitelist = [
+    'http://southerncalifornialinuxexpojavascriptbooth.org',
+    'https://southerncalifornialinuxexpojavascriptbooth.org',
+    'http://localhost:8000'
+]
+const corsOptions = {
+    origin: function(origin, callback) {
+        const isOk = corsWhitelist.indexOf(origin) !== -1
+        callback(isOk ? null : 'Bad Request', isOk)
+    }
+}
 const postgres = knex({
     client: 'postgres',
     connection: process.env.DATABASE_URL
@@ -23,7 +35,7 @@ app.get('/', function(req, res){
     res.send('hi!')
 })
 
-app.post('/anonymous_votes', function(req, res){
+app.post('/anonymous_votes', cors(corsOptions), function(req, res){
     req.assert('color', "Hex color not valid.").isHexColor();
     req.getValidationResult().then(function(result){
         if(!result.isEmpty()){
@@ -40,7 +52,7 @@ app.post('/anonymous_votes', function(req, res){
     })
 })
 
-app.get('/anonymous_votes', function(req, res){
+app.get('/anonymous_votes', cors(corsOptions), function(req, res){
     postgres.select().from('anonymous_vote').then(function(rows){
         res.status(200).json({
             anonymous_votes: rows
@@ -48,7 +60,7 @@ app.get('/anonymous_votes', function(req, res){
     })
 })
 
-app.post('/identified_votes', function(req, res){
+app.post('/identified_votes', cors(corsOptions), function(req, res){
     req.assert('color', "Hex color not valid.").isHexColor();
     req.assert('email', "Email not valid.").isEmail();
     req.getValidationResult().then(function(result){
