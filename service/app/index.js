@@ -64,7 +64,7 @@ app.get('/anonymous_votes', cors(corsOptions), function(req, res){
 })
 
 app.post('/identified_votes', cors(corsOptions), function(req, res){
-    console.log('working with...'+req.body)
+    console.log('working with...'+JSON.stringify(req.body))
     req.assert('color', "Hex color not valid.").isHexColor();
     req.assert('email', "Email not valid.").isEmail();
     req.getValidationResult().then(function(result){
