@@ -15,17 +15,16 @@ body {
     min-height: 100%;
 }
 
-body #voted {
-    display: none;
-}
-
-body.voted #voting {
-    display: none;
-}
-
-body.voted #voted {
-    display: block;
-}
+// voted
+body.voted { }
+body.voted #voting          { display: none; }
+body.voted #voted           { display: block; }
+body.voted #subscribed      { display: none; }
+// subscribed
+body.subscribed { }
+body.subscribed #voting     { display: none; }
+body.subscribed #voted      { display: none; }
+body.subscribed #subscribed { display: block; }
 
 body.subscribed #subscribe {
     display: none;
@@ -113,13 +112,13 @@ menu#color-picker {
     background-size: 100% 100%;
 }
 
-#vote {
+#vote, #submit-subscription {
     width: 100%;
     height: 3em;
     text-align: center;
 }
 
-#vote.light {
+#vote.light, #submit-subscription.light {
     color: white;
 }
 
@@ -135,9 +134,30 @@ menu#color-picker {
 }
 
 #voted {
+    display: none;
     text-align: center;
 }
 
-#signup {
+#subscribe {
     margin-top: 2em;
 }
+
+#subscribe label {
+    display: inline-block;
+    width: 30%;
+    text-align: left;
+}
+
+#subscribe input {
+    display: inline-block;
+    width: 60%;
+}
+
+#submit-subscription {
+    margin-top: 1.8em;
+}
+
+#subscribed {
+    display: none;
+}
+

@@ -7,6 +7,8 @@ const rand = () => Math.random();
 class Bus extends EventEmitter {};
 const bus = new Bus();
 
+const serviceUrl = "https://damp-falls-30597.herokuapp.com"
+
 var bindColorInputChanges = function(fn){
     return ['hue', 'lightness', 'saturation'].map(function(dimension){
         el(dimension).addEventListener('input', fn);
@@ -85,6 +87,7 @@ var Updater = function(){
     var shirtArtworkColor = updateShirtArtworkColor(el('tshirt-artwork'));
     var button = updateButton(el('vote'));
     var buttonText = updateButtonText(el('hex'));
+    var submitSubscription = updateButton(el('submit-subscription'));
     return function(color){
         var contrast = Color(color).dark() ? 'light' : 'dark';
         shirtColor(color);
@@ -92,6 +95,7 @@ var Updater = function(){
         colorPicker(color);
         buttonText(color);
         shirtArtworkColor(contrast);
+        submitSubscription(color, contrast)
     }
 }
 
@@ -103,10 +107,41 @@ bus.emit('NEW_COLOR', {
     saturation: rand()*50+rand()*50
 });
 
-var subscribe = function(){};  // no-op
+var subscribe = function(e){
+    e.preventDefault()
+    const body = {
+        color: Color(getColor()).hexString(),
+        email: el('email').value
+    }
+    fetch(serviceUrl+'/identified_votes', {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify(body)
+    })
+    .then(function(){
+        document.body.className = "subscribed"
+    })
+};
+
 var vote = function(){
-    document.body.classList.add('voted');
+    fetch(serviceUrl+'/anonymous_votes', {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({ color: "#000001" })
+    })
+    .then(function(res){ console.log('yay', res) })
+    .catch(function(res){ console.log('boo', res) })
+    // don't wait for slow cheap Heroku to warm up, just assume success:
+    setTimeout(function(){
+        document.body.classList.add('voted');
+    }, 200);
 };
 
 el('vote').addEventListener('click', vote);
-qs('#subscribe button').addEventListener('click', subscribe)
+qs('#subscribe form').addEventListener('submit', subscribe)

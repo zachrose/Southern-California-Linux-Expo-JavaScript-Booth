@@ -7,7 +7,7 @@
         <!-- <link rel="stylesheet" href="http://basehold.it/36"> -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
-    <body>
+    <body class=""> 
         <div id="container">
           <div id="voting">
             <h1>What color should the&nbsp;T&#8209;shirts&nbsp;be?</h1>
@@ -34,13 +34,26 @@
           <div id="voted">
             <h1>Thanks for your vote!</h1>
             <p>
-              Leave us your email to hear more about the JavaScript Booth at
+              Sign up to get updates on the T-shirt colors and to hear more about the JavaScript Booth at
               <a href="https://www.socallinuxexpo.org/scale/15x/">SCALE 15x</a>
             </p>
             <div id="subscribe">
-              <input type="email">
-              <button>OK</button>
+              <form>
+                <label for="email">
+                  Your email:
+                </label>
+                <input type="email" id="email" required/>
+                <input id="submit-subscription" type="submit" value="KEEP ME POSTED"/>
+              </form>
             </div>
+          </div>
+          <div id="subscribed">
+            <h1>Thanks for your email!</h1>
+            <p>
+              Hope to see you at the JavaScript booth at
+              <a href="https://www.socallinuxexpo.org/scale/15x/">SCALE 15x</a>. We'll let you know how the T-shirt voting goes.
+            </p>
+
           </div>
         </div>
         <script src="script.js"></script>
