@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
         knex.schema.createTable('identified_vote', function(table){
             table.increments()
             table.timestamp('created_at').defaultTo(knex.fn.now()).notNullable()
-            table.string('email').unique().notNullable()
+            table.string('email').notNullable()
             table.boolean('email_verified')
             table.string('email_verification_code').unique().notNullable()
             'rgb'.split('').forEach( (component) => {
