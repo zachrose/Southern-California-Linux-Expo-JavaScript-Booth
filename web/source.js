@@ -158,13 +158,16 @@ var subscribe = function(e){
 };
 
 var vote = function(){
+    const body = {
+        color: Color(getColor()).hexString()
+    }
     fetch(serviceUrl+'/anonymous_votes', {
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json"
         },
         method: "POST",
-        body: JSON.stringify({ color: "#000001" })
+        body: JSON.stringify(body)
     })
     .then(function(res){ console.log('yay', res) })
     .catch(function(res){ console.log('boo', res) })
