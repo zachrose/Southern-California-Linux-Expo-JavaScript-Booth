@@ -4,7 +4,6 @@ html, body {
 }
 
 * {
-    font-family: "Helvetica";
     font-family: Georgia;
     font-size: 24px;
     line-height: 1.5em;
@@ -169,4 +168,55 @@ footer {
 
 footer a {
     font-size: 12px;
+}
+
+.jsla #container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.jsla body * {
+    text-align: center;
+}
+
+.jsla.dark {
+    color: white;
+}
+
+.jsla.light {
+    color: black;
+}
+
+.jsla h1 {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 2em;
+}
+
+.jsla h2 {
+    text-align: center;
+}
+
+.jsla h2 a {
+    padding: 0.25em;
+}
+
+.jsla span {
+    font-weight: normal;
+    display: block;
+}
+
+.jsla.dark img {
+    filter: invert(100%);
+}
+.jsla img {
+    max-width: 30em;
+    height: auto;
+    margin: 1em auto;
+
+}
+
+.jsla #container a {
+    color: inherit;
 }

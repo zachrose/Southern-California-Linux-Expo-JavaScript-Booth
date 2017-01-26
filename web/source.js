@@ -1,3 +1,4 @@
+
 const EventEmitter = require('events');
 const Color = require('color');
 const tinygradient = require('tinygradient');
@@ -6,6 +7,36 @@ const qs = (selector) => document.querySelector(selector);
 const rand = () => Math.random();
 class Bus extends EventEmitter {};
 const bus = new Bus();
+
+// jsla page
+if(document.body.className == 'jsla'){
+    (function(){
+        let startingHue = Math.floor(rand()*360);
+        const getHue = function(){
+            startingHue = (startingHue + 1) % 360
+            return startingHue;
+        }
+        setInterval(function(){
+            const color = {
+                hue: getHue(),
+                lightness: 40,
+                saturation: 50
+            };
+            const lightOrDark = Color(color).dark() ? 'dark' : 'light';
+            const linkBgColor = lightOrDark ? 'white' : 'black'
+            const linkColor = Color(linkBgColor).dark() ? 'white': 'black';
+            [].slice.call(document.querySelectorAll("a.yay")).forEach(function(el){
+                el.style.color = linkColor;
+                el.style.backgroundColor = linkBgColor;
+            })
+            document.body.classList.remove('light')
+            document.body.classList.remove('dark')
+            document.body.classList.add(lightOrDark)
+            document.body.style.backgroundColor = Color(color).hexString()
+        }, 300);
+    })()
+}
+// end jsla page
 
 const serviceUrl = "https://damp-falls-30597.herokuapp.com"
 
@@ -145,3 +176,8 @@ var vote = function(){
 
 el('vote').addEventListener('click', vote);
 qs('#subscribe form').addEventListener('submit', subscribe)
+
+
+
+
+
